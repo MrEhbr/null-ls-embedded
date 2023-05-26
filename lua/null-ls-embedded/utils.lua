@@ -214,14 +214,19 @@ function M.get_ts_injection_nodes(bufnr)
     for id, node in pairs(match) do
       local name = query.captures[id]
 
+      local v = { range = { node:range() } }
+      if metadata[id] and metadata[id].range then
+        v.range = metadata[id].range
+      end
+
       if name == "language" and not lang then
         lang = vim.treesitter.get_node_text(node, bufnr)
       elseif name == "content" and #nodes == 0 then
-        table.insert(nodes, node)
+        table.insert(nodes, v)
       elseif string.sub(name, 1, 1) ~= "_" then
         lang = lang or name
 
-        table.insert(nodes, node)
+        table.insert(nodes, v)
       end
     end
 

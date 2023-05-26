@@ -151,7 +151,7 @@ local function nls_get_buf_edits(root_bufnr, root_ft, content, use_tmp_buf)
     edits_per_lang[lang] = {}
     for i, node in ipairs(nodes) do
       edits_per_lang[lang][i] = false
-      local nls_range = utils.nvim_range_to_nls({ node:range() })
+      local nls_range = utils.nvim_range_to_nls(node.range)
 
       nls_get_range_edit_async({
         bufnr = root_bufnr,
